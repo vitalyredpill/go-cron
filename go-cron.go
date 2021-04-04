@@ -21,11 +21,7 @@ func execute(command string, args []string)() {
     cmd.Wait()
 }
 
-func create() (cr *cron.Cron, wgr *sync.WaitGroup) {
-    var schedule string = os.Args[1]
-    var command string = os.Args[2]
-    var args []string = os.Args[3:len(os.Args)]
-
+func create(schedule string, command string, args []string) (cr *cron.Cron, wgr *sync.WaitGroup) {
     wg := &sync.WaitGroup{}
 
     c := cron.New(
@@ -60,8 +56,16 @@ func stop(c *cron.Cron, wg *sync.WaitGroup) {
 }
 
 func main() {
+    if (len(os.Args) < 3) {
+	println("Usage: go-cron [schedule] [command] [args ...]")
+	os.Exit(1)
+    }
 
-    c, wg := create()
+    var schedule string = os.Args[1]
+    var command string = os.Args[2]
+    var args []string = os.Args[3:len(os.Args)]
+
+    c, wg := create(schedule, command, args)
 
     go start(c, wg)
 
