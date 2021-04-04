@@ -80,5 +80,3 @@ func main() {
 
     stop(c, wg)
 }
-
-
