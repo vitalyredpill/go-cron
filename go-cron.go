@@ -16,9 +16,10 @@ func execute(command string, args []string)() {
     cmd.Stdout = os.Stdout
     cmd.Stderr = os.Stderr
 
-    cmd.Run()
-
-    cmd.Wait()
+    err := cmd.Run()
+    if err != nil {
+	println(err.Error())
+    }
 }
 
 func create(schedule string, command string, args []string) (cr *cron.Cron, wgr *sync.WaitGroup) {
