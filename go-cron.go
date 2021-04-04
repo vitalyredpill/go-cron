@@ -24,13 +24,17 @@ func execute(command string, args []string)() {
 func create(schedule string, command string, args []string) (cr *cron.Cron, wgr *sync.WaitGroup) {
     wg := &sync.WaitGroup{}
 
-    c := cron.New(
-      cron.WithParser(
-        cron.NewParser(
-          cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow | cron.Descriptor,
-        ),
-      ),
+    parser := cron.NewParser(
+	cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow | cron.Descriptor,
     )
+
+    _, err := parser.Parse(schedule)
+    if err != nil {
+	println(err.Error())
+	os.Exit(1)
+    }
+
+    c := cron.New(cron.WithParser(parser))
     println("new cron:", schedule)
 
     c.AddFunc(schedule, func() {
