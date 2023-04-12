@@ -5,7 +5,7 @@ import "strings"
 import "sync"
 import "os/signal"
 import "syscall"
-import "github.com/robfig/cron/v3"
+import "github.com/vitalyredpill/cron/v3"
 
 func execute(command string, args []string)() {
 
