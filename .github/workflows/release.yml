@@ -10,6 +10,9 @@ jobs:
   goreleaser:
     name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
     strategy:
       matrix:
         include:
