@@ -1,0 +1,6 @@
+# .goreleaser.yaml
+builds:
+  - goos:
+      - linux
+    goarch:
+      - amd64
